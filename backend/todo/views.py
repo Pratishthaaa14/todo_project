@@ -79,15 +79,15 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
 
+@login_required
 def dashboard_view(request):
-    if request.user.is_authenticated:
-        tasks = Task.objects.filter(user=request.user)
-        stats = {
-            'total': tasks.count(),
-            'completed': tasks.filter(complete=True).count(),
-            'in_progress': 0,  # or use another field if you have it
-            'pending': tasks.filter(complete=False).count(),
-        }
-        return render(request, 'users/dashboard.html', {'tasks': tasks, 'stats': stats})
-    else:
-        return redirect('login')
+    tasks = Task.objects.filter(user=request.user)
+
+    stats = {
+        'total': tasks.count(),
+        'completed': tasks.filter(status='COMPLETED').count(),
+        'in_progress': tasks.filter(status='IN_PROGRESS').count(),
+        'pending': tasks.filter(status='PENDING').count(),
+    }
+
+    return render(request, 'users/dashboard.html', {'tasks': tasks, 'stats': stats})
