@@ -6,8 +6,7 @@ from django.urls import reverse_lazy
 from .models import Task
 from django.db import models
 
-# Create your views here.
-
+# Task List with search, filter and sort
 class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'todo/task_list.html'
@@ -18,16 +17,26 @@ class TaskListView(LoginRequiredMixin, ListView):
         status = self.request.GET.get('status')
         sort = self.request.GET.get('sort')
         q = self.request.GET.get('q', '').strip()
-        if status in ['PENDING', 'IN_PROGRESS', 'COMPLETED']:
-            queryset = queryset.filter(status=status)
+
+        # Filter based on completion
+        if status == 'COMPLETED':
+            queryset = queryset.filter(complete=True)
+        elif status == 'PENDING':
+            queryset = queryset.filter(complete=False)
+
+        # Search by title or description
         if q:
             queryset = queryset.filter(
-                models.Q(title__icontains=q) | models.Q(description__icontains=q)
+                models.Q(title__icontains=q) |
+                models.Q(description__icontains=q)
             )
-        if sort in ['due_date', 'created_at', 'priority']:
+
+        # Sort
+        if sort in ['due_date', 'created', 'priority']:
             queryset = queryset.order_by(sort)
         else:
-            queryset = queryset.order_by('-created_at')
+            queryset = queryset.order_by('-created')
+
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -35,9 +44,8 @@ class TaskListView(LoginRequiredMixin, ListView):
         tasks = context['tasks']
         context['stats'] = {
             'total': tasks.count(),
-            'completed': tasks.filter(status='COMPLETED').count(),
-            'in_progress': tasks.filter(status='IN_PROGRESS').count(),
-            'pending': tasks.filter(status='PENDING').count(),
+            'completed': tasks.filter(complete=True).count(),
+            'pending': tasks.filter(complete=False).count(),
         }
         context['current_status'] = self.request.GET.get('status', '')
         context['current_sort'] = self.request.GET.get('sort', '')
@@ -55,7 +63,7 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
     template_name = 'todo/task_form.html'
-    fields = ['title', 'description', 'due_date', 'priority', 'status']
+    fields = ['title', 'description', 'due_date', 'priority', 'complete']
     success_url = reverse_lazy('todo:task-list')
 
     def form_valid(self, form):
@@ -65,7 +73,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 class TaskUpdateView(LoginRequiredMixin, UpdateView):
     model = Task
     template_name = 'todo/task_form.html'
-    fields = ['title', 'description', 'due_date', 'priority', 'status']
+    fields = ['title', 'description', 'due_date', 'priority', 'complete']
     success_url = reverse_lazy('todo:task-list')
 
     def get_queryset(self):
@@ -79,15 +87,16 @@ class TaskDeleteView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
 
+# Dashboard logic (if used here instead of users/views.py)
 @login_required
 def dashboard_view(request):
     tasks = Task.objects.filter(user=request.user)
 
     stats = {
         'total': tasks.count(),
-        'completed': tasks.filter(status='COMPLETED').count(),
-        'in_progress': tasks.filter(status='IN_PROGRESS').count(),
-        'pending': tasks.filter(status='PENDING').count(),
+        'completed': tasks.filter(complete=True).count(),
+        'pending': tasks.filter(complete=False).count(),
+        'in_progress': 0  # placeholder, not used
     }
 
     return render(request, 'users/dashboard.html', {'tasks': tasks, 'stats': stats})

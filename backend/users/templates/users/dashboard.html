@@ -7,38 +7,60 @@
         <div class="card mb-4 p-4">
             <h5 class="mb-3">Quick Stats</h5>
             <ul class="list-unstyled mb-4">
-                <li>Total Tasks <span class="float-end fw-bold">{{ stats.total }}</span></li>
-                <li>Completed <span class="float-end text-success fw-bold">{{ stats.completed }}</span></li>
-                <li>In Progress <span class="float-end text-warning fw-bold">{{ stats.in_progress }}</span></li>
-                <li>Pending <span class="float-end text-info fw-bold">{{ stats.pending }}</span></li>
+                <li>Total Tasks <span class="float-end fw-bold">{{ stats.total|default:0 }}</span></li>
+                <li>Completed <span class="float-end text-success fw-bold">{{ stats.completed|default:0 }}</span></li>
+                <li>In Progress <span class="float-end text-warning fw-bold">{{ stats.in_progress|default:0 }}</span></li>
+                <li>Pending <span class="float-end text-info fw-bold">{{ stats.pending|default:0 }}</span></li>
             </ul>
         </div>
     </div>
+
     <!-- Main Content: Dashboard -->
     <div class="col-lg-9">
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="fw-bold" style="font-size:2.2rem;">Dashboard : {{ request.user.username }}</h1>
+            <h1 class="fw-bold" style="font-size:2.2rem;">Dashboard : {{ request.user.username|default:"User" }}</h1>
             <a href="{% url 'todo:task-create' %}" class="btn btn-gradient px-4 py-2">
                 <i class="fas fa-plus"></i> Create New Task
             </a>
         </div>
+
         {% if tasks %}
             <div class="row g-4">
                 {% for task in tasks %}
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100 p-3 d-flex flex-column justify-content-between">
                             <div>
-                                <h5 class="card-title fw-bold">{{ task.title }}</h5>
+                                <h5 class="card-title fw-bold">{{ task.title|default:"Untitled Task" }}</h5>
+
                                 <div class="mb-2">
-                                    <span class="badge {% if task.status == 'COMPLETED' %}bg-success{% elif task.status == 'IN_PROGRESS' %}bg-warning{% else %}bg-info{% endif %} text-dark">
-                                        {{ task.get_status_display|default:'Pending' }}
+                                    <span class="badge 
+                                        {% if task.status == 'COMPLETED' %}
+                                            bg-success
+                                        {% elif task.status == 'IN_PROGRESS' %}
+                                            bg-warning
+                                        {% else %}
+                                            bg-info
+                                        {% endif %}
+                                        text-dark">
+                                        {% if task.status %}
+                                            {{ task.get_status_display|default_if_none:"Pending" }}
+                                        {% else %}
+                                            Pending
+                                        {% endif %}
                                     </span>
-                                    <span class="badge bg-light text-dark">Priority: {{ task.priority|default:'1' }}</span>
+
+                                    <span class="badge bg-light text-dark">
+                                        Priority: {{ task.priority|default:"1" }}
+                                    </span>
                                 </div>
+
                                 <p class="card-text">
-                                    <small class="text-muted">Due: {{ task.due_date|date:"M d, Y H:i" }}</small>
+                                    <small class="text-muted">
+                                        Due: {{ task.due_date|date:"M d, Y H:i" }}
+                                    </small>
                                 </p>
                             </div>
+
                             <div class="btn-group w-100 mt-3">
                                 <a href="{% url 'todo:task-update' task.id %}" class="btn btn-outline-info">
                                     <i class="fas fa-edit"></i> Edit
@@ -53,7 +75,9 @@
             </div>
         {% else %}
             <div class="card p-5 text-center mt-5">
-                <h3 class="mb-3"><i class="fas fa-inbox fa-2x mb-2"></i><br>No tasks found</h3>
+                <h3 class="mb-3">
+                    <i class="fas fa-inbox fa-2x mb-2"></i><br>No tasks found
+                </h3>
                 <p class="mb-4">Create your first task to get started!</p>
                 <a href="{% url 'todo:task-create' %}" class="btn btn-gradient px-4 py-2">+ Create Task</a>
             </div>
