@@ -1,0 +1,152 @@
+.login-bg {
+  min-height: 100vh;
+  background: #f76c6c url('https://www.transparenttextures.com/patterns/geometry2.png');
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-card-2col {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  display: flex;
+  max-width: 900px;
+  width: 100%;
+  min-height: 480px;
+  overflow: hidden;
+}
+
+.login-form-col {
+  flex: 1;
+  padding: 3rem 2.5rem 2.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-form-col h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #222;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 1.1rem;
+  color: #aaa;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem 0.75rem 0.75rem 2.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.form-options {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.login-button {
+  padding: 0.75rem;
+  background-color: #f76c6c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+}
+
+.login-button:hover {
+  background-color: #e05555;
+}
+
+.social-login {
+  margin: 2rem 0 1rem 0;
+  text-align: left;
+  font-size: 0.98rem;
+  color: #444;
+}
+
+.social-buttons {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+.social-btn {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  color: #fff;
+  background: #bbb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.social-btn.facebook { background: #3b5998; }
+.social-btn.google { background: #db4437; }
+.social-btn.github { background: #222; }
+.social-btn:hover { opacity: 0.85; }
+
+.register-link {
+  margin-top: 1.5rem;
+  color: #444;
+  font-size: 0.98rem;
+}
+.register-link a {
+  color: #f76c6c;
+  text-decoration: none;
+  font-weight: 500;
+}
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+.login-illustration-col {
+  flex: 1;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 2rem 2rem 0;
+}
+
+.login-illustration {
+  max-width: 340px;
+  width: 100%;
+  height: auto;
+}

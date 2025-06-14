@@ -1,0 +1,15 @@
+asgiref==3.8.1
+Django==5.2.3
+django-cors-headers==4.7.0
+gunicorn
+packaging==25.0
+sqlparse==0.5.3
+tzdata==2025.2
+python-dotenv
+djangorestframework
+drf-yasg
+django-filter
+Pillow
+PyJWT
+whitenoise
+dj_database_url

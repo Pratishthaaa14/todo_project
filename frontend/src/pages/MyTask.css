@@ -1,0 +1,146 @@
+.mytask-main {
+  flex: 1;
+  padding: 2.5rem 2.5rem 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.mytask-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+.mytask-header h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #222;
+}
+.dashboard-search input {
+  padding: 0.7rem 1.2rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 260px;
+}
+
+.mytask-content {
+  display: flex;
+  gap: 2rem;
+}
+
+.mytask-list {
+  flex: 1.2;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  max-width: 350px;
+}
+.mytask-list-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+}
+.mytask-list-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+.mytask-card {
+  background: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  padding: 1rem 0.7rem;
+  margin-bottom: 0.7rem;
+  cursor: pointer;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+.mytask-card.selected, .mytask-card:hover {
+  background: #e0eaff;
+  box-shadow: 0 2px 8px rgba(60,130,246,0.08);
+}
+.mytask-card-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.mytask-card-img {
+  width: 54px;
+  height: 54px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.mytask-card-title {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 0.2rem;
+}
+.mytask-card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.93rem;
+  color: #888;
+}
+.priority.extreme { color: #f76c6c; font-weight: 600; }
+.priority.moderate { color: #3b82f6; font-weight: 600; }
+.status.not-started { color: #f76c6c; }
+.status.in-progress { color: #3b82f6; }
+.status.completed { color: #22c55e; }
+.created { color: #aaa; font-size: 0.91rem; }
+
+.mytask-details {
+  flex: 2;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 2rem 1.5rem;
+  min-width: 340px;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+.mytask-details-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.mytask-details-img {
+  width: 100%;
+  max-width: 220px;
+  border-radius: 10px;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+}
+.mytask-details-title {
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.mytask-details-desc {
+  color: #444;
+  font-size: 1rem;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.edit-task-btn {
+  margin-left: 1rem;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.98rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.edit-task-btn:hover {
+  background: #2563eb;
+} 

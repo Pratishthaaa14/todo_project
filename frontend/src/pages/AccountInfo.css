@@ -1,0 +1,72 @@
+.accountinfo-main {
+  flex: 1;
+  padding: 2.5rem 2.5rem 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.accountinfo-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  min-width: 400px;
+  max-width: 480px;
+  width: 100%;
+}
+.accountinfo-card h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #222;
+}
+.accountinfo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.accountinfo-form label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #444;
+}
+.accountinfo-form input[type="text"],
+.accountinfo-form input[type="email"] {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+.accountinfo-btn-row {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+}
+.accountinfo-save {
+  background: #f76c6c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.accountinfo-save:hover {
+  background: #e05555;
+}
+.accountinfo-cancel {
+  background: #eee;
+  color: #f76c6c;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.accountinfo-cancel:hover {
+  background: #f8f9fa;
+} 

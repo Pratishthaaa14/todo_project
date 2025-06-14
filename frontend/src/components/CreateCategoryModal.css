@@ -1,0 +1,84 @@
+.createcat-modal-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.createcat-modal {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  width: 420px;
+  max-width: 95vw;
+  padding: 2rem 2rem 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.createcat-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+.createcat-modal-close {
+  background: none;
+  border: none;
+  color: #f76c6c;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+.createcat-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.createcat-form label {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #444;
+}
+.createcat-form input[type="text"] {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+.createcat-btn-row {
+  display: flex;
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+}
+.createcat-create {
+  background: #f76c6c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.createcat-create:hover {
+  background: #e05555;
+}
+.createcat-cancel {
+  background: #eee;
+  color: #f76c6c;
+  border: none;
+  border-radius: 6px;
+  padding: 0.7rem 2.2rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.createcat-cancel:hover {
+  background: #f8f9fa;
+} 

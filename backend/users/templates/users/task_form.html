@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card p-5 shadow-lg" style="max-width: 450px; width: 100%;">
+        <h2 class="fw-bold mb-4 text-center" style="font-size:2rem;">
+            {% if form.instance.pk %}
+                Edit Task
+            {% else %}
+                Create New Task
+            {% endif %}
+        </h2>
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <a href="{% url 'tasks' %}" class="btn btn-outline-light px-4">Back</a>
+                <button type="submit" class="btn btn-gradient px-4">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

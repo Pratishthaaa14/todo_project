@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="card p-5 shadow-lg text-center" style="max-width: 400px; width: 100%;">
+        <h2 class="fw-bold mb-4" style="font-size:2rem;">Delete Task</h2>
+        <p class="lead mb-3">Are you sure you want to delete the task <span class="fw-bold text-warning">"{{ task.title }}"</span>?</p>
+        <p class="text-danger mb-4">This action cannot be undone.</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'todo:task-list' %}" class="btn btn-outline-light px-4">Cancel</a>
+                <button type="submit" class="btn btn-gradient px-4">
+                    <i class="fas fa-trash"></i> Delete Task
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 

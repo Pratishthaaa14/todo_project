@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row g-4">
+    <!-- Sidebar: Quick Stats & Filters -->
+    <div class="col-lg-3">
+        <div class="card mb-4 p-4">
+            <h5 class="mb-3">Quick Stats</h5>
+            <ul class="list-unstyled mb-4">
+                <li>Total Tasks <span class="float-end fw-bold">{{ stats.total }}</span></li>
+                <li>Completed <span class="float-end text-success fw-bold">{{ stats.completed }}</span></li>
+                <li>In Progress <span class="float-end text-warning fw-bold">{{ stats.in_progress }}</span></li>
+                <li>Pending <span class="float-end text-info fw-bold">{{ stats.pending }}</span></li>
+            </ul>
+            <h6 class="mb-2">Filters</h6>
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                <div class="d-grid gap-2">
+                    <a href="?{% if current_search %}q={{ current_search }}&{% endif %}" class="btn btn-sm {% if not current_status %}btn-gradient{% else %}btn-outline-light{% endif %}">All</a>
+                    <a href="?status=PENDING{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&q={{ current_search }}{% endif %}" class="btn btn-sm {% if current_status == 'PENDING' %}btn-gradient{% else %}btn-outline-light{% endif %}">Pending</a>
+                    <a href="?status=IN_PROGRESS{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&q={{ current_search }}{% endif %}" class="btn btn-sm {% if current_status == 'IN_PROGRESS' %}btn-gradient{% else %}btn-outline-light{% endif %}">In Progress</a>
+                    <a href="?status=COMPLETED{% if current_sort %}&sort={{ current_sort }}{% endif %}{% if current_search %}&q={{ current_search }}{% endif %}" class="btn btn-sm {% if current_status == 'COMPLETED' %}btn-gradient{% else %}btn-outline-light{% endif %}">Completed</a>
+                </div>
+            </div>
+            <div>
+                <label class="form-label">Sort by</label>
+                <div class="d-grid gap-2">
+                    <a href="?{% if current_status %}status={{ current_status }}&{% endif %}sort=due_date{% if current_search %}&q={{ current_search }}{% endif %}" class="btn btn-sm {% if current_sort == 'due_date' %}btn-gradient{% else %}btn-outline-light{% endif %}">Due Date</a>
+                    <a href="?{% if current_status %}status={{ current_status }}&{% endif %}sort=created_at{% if current_search %}&q={{ current_search }}{% endif %}" class="btn btn-sm {% if current_sort == 'created_at' or not current_sort %}btn-gradient{% else %}btn-outline-light{% endif %}">Creation Date</a>
+                    <a href="?{% if current_status %}status={{ current_status }}&{% endif %}sort=priority{% if current_search %}&q={{ current_search }}{% endif %}" class="btn btn-sm {% if current_sort == 'priority' %}btn-gradient{% else %}btn-outline-light{% endif %}">Priority</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main Content: Task List -->
+    <div class="col-lg-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="fw-bold" style="font-size:2.2rem;">My Tasks</h1>
+            <a href="{% url 'todo:task-create' %}" class="btn btn-gradient px-4 py-2">
+                <i class="fas fa-plus"></i> Create New Task
+            </a>
+        </div>
+        <!-- Search Bar -->
+        <form method="get" class="mb-4 d-flex" style="max-width: 500px;">
+            <input type="text" name="q" class="form-control me-2" placeholder="Search tasks by title or description..." value="{{ current_search }}">
+            {% if current_status %}<input type="hidden" name="status" value="{{ current_status }}">{% endif %}
+            {% if current_sort %}<input type="hidden" name="sort" value="{{ current_sort }}">{% endif %}
+            <button type="submit" class="btn btn-gradient px-4">Search</button>
+        </form>
+        {% if tasks %}
+            <div class="row g-4">
+                {% for task in tasks %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 p-3 d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="card-title fw-bold">{{ task.title }}</h5>
+                                <p class="card-text">{{ task.description|truncatewords:20 }}</p>
+                                <div class="mb-2">
+                                    <span class="badge {% if task.status == 'COMPLETED' %}bg-success{% elif task.status == 'IN_PROGRESS' %}bg-warning{% else %}bg-info{% endif %} text-dark">
+                                        {{ task.get_status_display }}
+                                    </span>
+                                    <span class="badge bg-light text-dark">Priority: {{ task.priority }}</span>
+                                </div>
+                                <p class="card-text">
+                                    <small class="text-muted">Due: {{ task.due_date|date:"M d, Y H:i" }}</small>
+                                </p>
+                            </div>
+                            <div class="btn-group w-100 mt-3">
+                                <a href="{% url 'todo:task-detail' task.pk %}" class="btn btn-outline-light">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                                <a href="{% url 'todo:task-update' task.pk %}" class="btn btn-outline-info">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a href="{% url 'todo:task-delete' task.pk %}" class="btn btn-outline-danger">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="card p-5 text-center mt-5">
+                <h3 class="mb-3"><i class="fas fa-inbox fa-2x mb-2"></i><br>No tasks found</h3>
+                <p class="mb-4">Create your first task to get started!</p>
+                <a href="{% url 'todo:task-create' %}" class="btn btn-gradient px-4 py-2">+ Create Task</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

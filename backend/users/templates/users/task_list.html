@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row g-4">
+    <!-- Sidebar: Quick Stats & Add -->
+    <div class="col-lg-3">
+        <div class="card mb-4 p-4">
+            <h5 class="mb-3">Hello {{ request.user|title }}</h5>
+            <h6 class="mb-4">You have <span class="fw-bold">{{ count }}</span> incomplete task{{ count|pluralize:"s" }}</h6>
+            <a href="{% url 'task-create' %}" class="btn btn-gradient w-100 mb-3">
+                <i class="fas fa-plus"></i> Create New Task
+            </a>
+            <form method="GET" class="mb-2">
+                <div class="input-group">
+                    <input type="text" name="search-area" class="form-control" placeholder="Search your task" value="{{ search_input }}">
+                    <button class="btn btn-gradient" type="submit"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Main Content: Task List -->
+    <div class="col-lg-9">
+        {% if tasks %}
+            <div class="row g-4">
+                {% for task in tasks %}
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 p-3 d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="card-title fw-bold">{{ task.title }}</h5>
+                                <div class="mb-2">
+                                    {% if task.complete %}
+                                        <span class="badge bg-success">Completed</span>
+                                    {% else %}
+                                        <span class="badge bg-info text-dark">Pending</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="btn-group w-100 mt-3">
+                                <a href="{% url 'task-update' task.id %}" class="btn btn-outline-info">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a href="{% url 'task-delete' task.id %}" class="btn btn-outline-danger">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="card p-5 text-center mt-5">
+                <h3 class="mb-3"><i class="fas fa-inbox fa-2x mb-2"></i><br>No tasks found</h3>
+                <p class="mb-4">Create your first task to get started!</p>
+                <a href="{% url 'task-create' %}" class="btn btn-gradient px-4 py-2">+ Create Task</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

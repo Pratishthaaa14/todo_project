@@ -1,0 +1,79 @@
+.taskcategories-main {
+  flex: 1;
+  padding: 2.5rem 2.5rem 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.taskcategories-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  min-width: 500px;
+  max-width: 700px;
+  width: 100%;
+}
+.taskcategories-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.taskcategories-card h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #222;
+}
+.taskcategories-create-btn {
+  background: #f76c6c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.taskcategories-create-btn:hover {
+  background: #e05555;
+}
+.taskcategories-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+.taskcategories-table th,
+.taskcategories-table td {
+  padding: 0.8rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+.taskcategories-table th {
+  color: #888;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.taskcategories-edit-btn,
+.taskcategories-delete-btn {
+  background: #f76c6c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.98rem;
+  font-weight: 500;
+  margin-right: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.taskcategories-edit-btn:hover {
+  background: #3b82f6;
+}
+.taskcategories-delete-btn {
+  background: #e05555;
+}
+.taskcategories-delete-btn:hover {
+  background: #d7263d;
+} 
