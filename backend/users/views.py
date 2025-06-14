@@ -121,16 +121,25 @@ class TaskReorder(View):
         return redirect(reverse_lazy('tasks'))
 
 
-@login_required(login_url='/users/login/')
+@login_required
 def dashboard_view(request):
-    tasks = Task.objects.filter(user=request.user)
-    stats = {
-        'total': tasks.count(),
-        'completed': tasks.filter(complete=True).count(),
-        'pending': tasks.filter(complete=False).count(),
-        'in_progress': 0  # Placeholder, since no such field in model
-    }
-    return render(request, 'users/dashboard.html', {'tasks': tasks, 'stats': stats})
+    try:
+        tasks = Task.objects.filter(user=request.user)
+
+        stats = {
+            'total': tasks.count(),
+            'completed': tasks.filter(complete=True).count(),
+            'pending': tasks.filter(complete=False).count(),
+            'in_progress': 0,
+        }
+
+        return HttpResponse(
+            f"Dashboard OK<br>Total: {stats['total']}<br>Completed: {stats['completed']}<br>Pending: {stats['pending']}",
+            status=200
+        )
+    except Exception as e:
+        return HttpResponse(f"Dashboard Error: {e}", status=500)
+
 
 def logout_redirect(request):
     return HttpResponseRedirect('/users/login/')  # Fix: match your URL pattern
