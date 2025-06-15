@@ -8,7 +8,6 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
 
 # Imports for Reordering Feature
 from django.views import View
@@ -18,7 +17,7 @@ from django.db import transaction
 from .models import Task
 from .forms import PositionForm, CustomUserCreationForm
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 
 
 class CustomLoginView(LoginView):
@@ -121,28 +120,24 @@ class TaskReorder(View):
         return redirect(reverse_lazy('tasks'))
 
 
-@login_required
-def dashboard_view(request):
-    try:
-        tasks = Task.objects.filter(user=request.user)
 
+def dashboard_view(request):
+    if request.user.is_authenticated:
+        tasks = Task.objects.filter(user=request.user)
         stats = {
             'total': tasks.count(),
             'completed': tasks.filter(complete=True).count(),
             'pending': tasks.filter(complete=False).count(),
-            'in_progress': 0,
+            'in_progress': 0,  # No in_progress field, set to 0 or implement if needed
         }
-
-        return HttpResponse(
-            f"Dashboard OK<br>Total: {stats['total']}<br>Completed: {stats['completed']}<br>Pending: {stats['pending']}",
-            status=200
-        )
-    except Exception as e:
-        return HttpResponse(f"Dashboard Error: {e}", status=500)
-
+        return render(request, 'users/dashboard.html', {'tasks': tasks, 'stats': stats})
+    else:
+        return redirect('login')
 
 def logout_redirect(request):
-    return HttpResponseRedirect('/users/login/')  # Fix: match your URL pattern
+    return HttpResponseRedirect('/login/') 
+
+from django.http import HttpResponse
 
 def health_check(request):
     return HttpResponse("Healthy", status=200)
