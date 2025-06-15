@@ -121,18 +121,17 @@ class TaskReorder(View):
 
 
 
+@login_required
 def dashboard_view(request):
-    if request.user.is_authenticated:
-        tasks = Task.objects.filter(user=request.user)
-        stats = {
-            'total': tasks.count(),
-            'completed': tasks.filter(complete=True).count(),
-            'pending': tasks.filter(complete=False).count(),
-            'in_progress': 0,  # No in_progress field, set to 0 or implement if needed
-        }
-        return render(request, 'users/dashboard.html', {'tasks': tasks, 'stats': stats})
-    else:
-        return redirect('login')
+    tasks = Task.objects.filter(user=request.user)
+
+    stats = {
+        'total': tasks.count(),
+        'completed': tasks.filter(complete=True).count(),
+        'pending': tasks.filter(complete=False).count(),
+        'in_progress': 0,
+    }
+    return render(request, 'users/dashboard.html', {'tasks': tasks, 'stats': stats})
 
 def logout_redirect(request):
     return HttpResponseRedirect('/login/') 
