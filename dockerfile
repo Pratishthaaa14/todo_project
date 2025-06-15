@@ -14,17 +14,20 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-
+# Copy requirements and install
 COPY backend/requirements.txt /app/backend/
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-
+# Copy project files
 COPY . /app/
 
 # Collect static files and run migrations
 RUN python manage.py collectstatic --noinput
 RUN python manage.py migrate
 
+# Expose port (optional)
+EXPOSE 8000
 
+# Start Gunicorn server
 CMD ["gunicorn", "todo_project.wsgi:application", "--bind", "0.0.0.0:8000"]
