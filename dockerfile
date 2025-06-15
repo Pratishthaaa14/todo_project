@@ -22,6 +22,8 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # Collect static files and run migrations
+# Set Django settings module if needed
+ENV DJANGO_SETTINGS_MODULE=backend.todo_project.settings
 RUN python backend/manage.py collectstatic --noinput
 RUN python backend/manage.py migrate
 
